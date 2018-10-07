@@ -856,10 +856,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Libresot is not available</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Query for Market</source>
         <translation type="unfinished"></translation>
     </message>
@@ -877,6 +873,10 @@
     </message>
     <message>
         <source>Docked Panel with Player Controls and Hamburger button</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Librespot is not available</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

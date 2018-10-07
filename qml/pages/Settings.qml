@@ -90,7 +90,7 @@ Page {
                 }
                 description: {
                     if(!librespot.serviceEnabled)
-                        return qsTr("Libresot is not available")
+                        return qsTr("Librespot is not available")
                     else
                         return librespot.serviceRunning
                                 ? qsTr("Running")
