@@ -34,8 +34,8 @@ Page {
 
         width: parent.width
         anchors.top: parent.top
-        anchors.bottom: navPanel.top
-        clip: navPanel.expanded
+        anchors.bottom: panelLoader.itemTop
+        clip: panelLoader.itemExpanded
 
         LoadPullMenus {}
         LoadPushMenus {}
@@ -138,8 +138,9 @@ Page {
         }
     }
 
-    NavigationPanel {
-        id: navPanel
+    PanelLoader {
+        id: panelLoader
+        listView: listView
     }
 
     // when the page is on the stack but not on top a refresh can wait

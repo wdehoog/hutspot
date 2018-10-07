@@ -34,8 +34,8 @@ Page {
 
         width: parent.width
         anchors.top: parent.top
-        anchors.bottom: parent.bottom
-        clip: panelLoader.item ? panelLoader.item.expanded : false
+        anchors.bottom: panelLoader.itemTop
+        clip: panelLoader.itemExpanded
 
         LoadPullMenus {}
         LoadPushMenus {}

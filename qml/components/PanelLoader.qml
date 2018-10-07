@@ -10,6 +10,10 @@ import Sailfish.Silica 1.0
 Loader {
 
     property var listView
+    property var itemTop: _hasItem ? item.top : listView.parent.bottom
+    property bool itemExpanded: _hasItem ? item.expanded : false
+
+    property bool _hasItem: false
 
     width: parent.width
 
@@ -21,12 +25,18 @@ Loader {
         }
     }
 
+    onStatusChanged: {
+        if(status === Loader.Null || status === Loader.Error)
+            _hasItem = false
+    }
+
     onLoaded: {
         if(app.navigation_menu_type.value === 3) {
-            panelLoader.item.parent = parent
+            panelLoader.item.parent = listView.parent
             panelLoader.item.flickable = listView
-            listView.anchors.bottom = panelLoader.item.top
         }
+        _hasItem = app.navigation_menu_type.value === 2
+                   || app.navigation_menu_type.value === 3
     }
 
 }

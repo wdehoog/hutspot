@@ -6,7 +6,7 @@ DockedPanel {
     property SilicaListView flickable: undefined
     property string defaultImageSource : "image://theme/icon-l-music"
 
-    width: parent.width
+    width: parent ? parent.width : 0
     height: Theme.itemSizeLarge
     dock: Dock.Bottom
     open: false
