@@ -20,42 +20,53 @@ DockedPanel {
         property real itemWidth : width / 5
 
         // album art
-        Image {
-            id: imageItem
-            anchors.verticalCenter: parent.verticalCenter
-            source: app.controller.getCoverArt(defaultImageSource, true)
+        Item {
             width: row.itemWidth
             height: width
-            fillMode: Image.PreserveAspectFit
-            //onPaintedHeightChanged: height = Math.min(parent.width, paintedHeight)
+            anchors.verticalCenter: parent.verticalCenter
+            Image {
+                id: imageItem
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.horizontalCenter: parent.horizontalCenter
+                source: app.controller.getCoverArt(defaultImageSource, true)
+                width: row.itemWidth * 0.9
+                height: width
+                fillMode: Image.PreserveAspectFit
+            }
         }
 
-        Row {
-            id: playerButtons
+        Item {
             width: row.itemWidth * 3
+            height: parent.height
             anchors.verticalCenter: parent.verticalCenter
-            // player controls
-            IconButton {
+
+            Row {
+                id: playerButtons
                 anchors.verticalCenter: parent.verticalCenter
-                //width: buttonRow.itemWidth
-                // enabled: app.mprisPlayer.canGoPrevious
-                icon.source: "image://theme/icon-m-previous"
-                onClicked: app.controller.previous()
-            }
-            IconButton {
-                anchors.verticalCenter: parent.verticalCenter
-                //width: buttonRow.itemWidth
-                icon.source: app.controller.playbackState.is_playing
-                             ? "image://theme/icon-l-pause"
-                             : "image://theme/icon-l-play"
-                onClicked: app.controller.playPause()
-            }
-            IconButton {
-                anchors.verticalCenter: parent.verticalCenter
-                //width: buttonRow.itemWidth
-                // enabled: app.mprisPlayer.canGoNext
-                icon.source: "image://theme/icon-m-next"
-                onClicked: app.controller.next()
+                anchors.horizontalCenter: parent.horizontalCenter
+                // player controls
+                IconButton {
+                    anchors.verticalCenter: parent.verticalCenter
+                    //width: buttonRow.itemWidth
+                    // enabled: app.mprisPlayer.canGoPrevious
+                    icon.source: "image://theme/icon-m-previous"
+                    onClicked: app.controller.previous()
+                }
+                IconButton {
+                    anchors.verticalCenter: parent.verticalCenter
+                    //width: buttonRow.itemWidth
+                    icon.source: app.controller.playbackState.is_playing
+                                 ? "image://theme/icon-l-pause"
+                                 : "image://theme/icon-l-play"
+                    onClicked: app.controller.playPause()
+                }
+                IconButton {
+                    anchors.verticalCenter: parent.verticalCenter
+                    //width: buttonRow.itemWidth
+                    // enabled: app.mprisPlayer.canGoNext
+                    icon.source: "image://theme/icon-m-next"
+                    onClicked: app.controller.next()
+                }
             }
         }
 
