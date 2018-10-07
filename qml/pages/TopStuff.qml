@@ -34,7 +34,6 @@ Page {
 
         width: parent.width
         anchors.top: parent.top
-        //anchors.bottom: panelLoader.item ? panelLoader.item.top : parent.bottom
         anchors.bottom: parent.bottom
         clip: panelLoader.item ? panelLoader.item.expanded : false
 
@@ -102,36 +101,10 @@ Page {
         }
     }
 
-
-    Loader {
+    PanelLoader {
         id: panelLoader
-        width: parent.width
-        source: {
-            switch(app.navigation_menu_type.value) {
-            case 2: return "../components/NavigationPanel.qml"
-            case 3: return "../components/ControlPanel.qml"
-            default: return ""
-            }
-        }
-
-        onLoaded: {
-            if(app.navigation_menu_type.value === 3) {
-                panelLoader.item.parent = parent
-                panelLoader.item.flickable = listView
-                listView.anchors.bottom = panelLoader.item.top
-            }
-        }
-
+        listView: listView
     }
-
-    /*NavigationPanel {
-        id: navPanel
-    }
-
-    ControlPanel {
-        id: controlPanel
-        flickable: listView
-    }*/
 
     property var topTracks
     property var topArtists
