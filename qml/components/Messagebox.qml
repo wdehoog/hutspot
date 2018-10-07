@@ -30,11 +30,12 @@ BackgroundItem
         messageboxVisibility.restart()
     }
 
-    Label
-    {
+    TextArea {
         id: messageboxText
         color: Theme.primaryColor
         text: ""
+        readOnly: true
+        wrapMode: Text.Wrap
         anchors.centerIn: parent
     }
 
