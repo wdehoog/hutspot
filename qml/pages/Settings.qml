@@ -145,7 +145,9 @@ Page {
 
                 menu: ContextMenu {
                     MenuItem { text: qsTr("Page with List of Menu Items") }
-                    MenuItem { text: qsTr("Docked Panel with Icons") }
+                    MenuItem { text: qsTr("Menu Page attached to Playing Page") }
+                    MenuItem { text: qsTr("Docked Panel with all Icons") }
+                    MenuItem { text: qsTr("Docked Panel with Player Controls and Hamburger button") }
                 }
 
                 onCurrentIndexChanged: {

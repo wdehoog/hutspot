@@ -828,10 +828,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Docked Panel with Icons</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Playing as Attached Page</source>
         <translation type="unfinished"></translation>
     </message>
@@ -869,6 +865,18 @@
     </message>
     <message>
         <source>Show only content playable in the country associated with the user account</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Menu Page attached to Playing Page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Docked Panel with all Icons</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Docked Panel with Player Controls and Hamburger button</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

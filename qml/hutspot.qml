@@ -928,6 +928,7 @@ ApplicationWindow {
     // 0 for NavigationMenuDialog
     // 1 for NavigationMenu as attacted page
     // 2 for NavigationPanel
+    // 3 for panel with controls and hamburger
     ConfigurationValue {
             id: navigation_menu_type
             key: "/hutspot/navigation_menu_type"
