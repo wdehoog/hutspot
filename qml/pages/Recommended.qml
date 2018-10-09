@@ -33,8 +33,8 @@ Page {
 
         width: parent.width
         anchors.top: parent.top
-        anchors.bottom: navPanel.top
-        clip: navPanel.expanded
+        anchors.bottom: panelLoader.itemTop
+        clip: panelLoader.itemExpanded
 
         PullDownMenu {
             MenuItem {
@@ -176,8 +176,9 @@ Page {
 
     }
 
-    NavigationPanel {
-        id: navPanel
+    PanelLoader {
+        id: panelLoader
+        flickable: listView
     }
 
     function refresh() {

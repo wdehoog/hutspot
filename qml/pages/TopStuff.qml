@@ -28,82 +28,86 @@ Page {
         id: searchModel
     }
 
-    SilicaListView {
-        id: listView
-        model: searchModel
+    Column {
 
-        width: parent.width
-        anchors.top: parent.top
-        anchors.bottom: panelLoader.itemTop
-        clip: panelLoader.itemExpanded
+        anchors.fill: parent
 
-        LoadPullMenus {}
-        LoadPushMenus {}
+        SilicaListView {
+            id: listView
+            model: searchModel
 
-        header: Column {
-            id: lvColumn
+            width: parent.width
+            height: parent.height - panelLoader.height
+            clip: panelLoader.height > 0
 
-            width: parent.width - 2*Theme.paddingMedium
-            x: Theme.paddingMedium
-            anchors.bottomMargin: Theme.paddingLarge
-            spacing: Theme.paddingLarge
+            LoadPullMenus {}
+            LoadPushMenus {}
 
-            PageHeader {
-                id: pHeader
-                width: parent.width
-                title: {
-                    switch(_itemClass) {
-                    case 0: return Util.createPageHeaderLabel(qsTr("Top "), qsTr("Tracks"), Theme)
-                    case 1: return Util.createPageHeaderLabel(qsTr("Top "), qsTr("Artists"), Theme)
+            header: Column {
+                id: lvColumn
+
+                width: parent.width - 2*Theme.paddingMedium
+                x: Theme.paddingMedium
+                anchors.bottomMargin: Theme.paddingLarge
+                spacing: Theme.paddingLarge
+
+                PageHeader {
+                    id: pHeader
+                    width: parent.width
+                    title: {
+                        switch(_itemClass) {
+                        case 0: return Util.createPageHeaderLabel(qsTr("Top "), qsTr("Tracks"), Theme)
+                        case 1: return Util.createPageHeaderLabel(qsTr("Top "), qsTr("Artists"), Theme)
+                        }
+                    }
+                    MenuButton { z: 1} // set z so you can still click the button
+                    MouseArea {
+                        anchors.fill: parent
+                        propagateComposedEvents: true
+                        onClicked: nextItemClass()
                     }
                 }
-                MenuButton { z: 1} // set z so you can still click the button
-                MouseArea {
-                    anchors.fill: parent
-                    propagateComposedEvents: true
-                    onClicked: nextItemClass()
+
+            }
+
+            delegate: ListItem {
+                id: listItem
+                width: parent.width - 2*Theme.paddingMedium
+                x: Theme.paddingMedium
+                contentHeight: Theme.itemSizeLarge
+
+                SearchResultListItem {
+                    id: searchResultListItem
+                    dataModel: model
+                }
+
+                menu: SearchResultContextMenu {}
+
+                onClicked: {
+                    switch(type) {
+                    case 1:
+                        app.pushPage(Util.HutspotPage.Artist, {currentArtist: artist})
+                        break;
+                    case 3:
+                        app.pushPage(Util.HutspotPage.Album, {album: track.album})
+                        break;
+                    }
                 }
             }
 
-        }
+            VerticalScrollDecorator {}
 
-        delegate: ListItem {
-            id: listItem
-            width: parent.width - 2*Theme.paddingMedium
-            x: Theme.paddingMedium
-            contentHeight: Theme.itemSizeLarge
-
-            SearchResultListItem {
-                id: searchResultListItem
-                dataModel: model
-            }
-
-            menu: SearchResultContextMenu {}
-
-            onClicked: {
-                switch(type) {
-                case 1:
-                    app.pushPage(Util.HutspotPage.Artist, {currentArtist: artist})
-                    break;
-                case 3:
-                    app.pushPage(Util.HutspotPage.Album, {album: track.album})
-                    break;
-                }
+            ViewPlaceholder {
+                enabled: listView.count === 0
+                text: qsTr("Nothing found")
+                hintText: qsTr("Pull down to reload")
             }
         }
 
-        VerticalScrollDecorator {}
-
-        ViewPlaceholder {
-            enabled: listView.count === 0
-            text: qsTr("Nothing found")
-            hintText: qsTr("Pull down to reload")
+        PanelLoader {
+            id: panelLoader
+            flickable: listView
         }
-    }
-
-    PanelLoader {
-        id: panelLoader
-        listView: listView
     }
 
     property var topTracks

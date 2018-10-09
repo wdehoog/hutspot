@@ -1,30 +1,27 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-BackgroundItem
-{
+BackgroundItem {
     id: messagebox
+    property alias messageboxText: messageboxText
     z: 20
     visible: messageboxVisibility.running
-    height: Theme.itemSizeSmall + Theme.paddingSmall
+    height: messageboxText.height + Theme.paddingSmall
     anchors.centerIn: parent
     onClicked: messageboxVisibility.stop()
 
-    Rectangle
-    {
-        height: Theme.paddingSmall
+    Rectangle {
+        height: messageboxText.height
         width: parent.width
         color: Theme.highlightBackgroundColor
     }
 
-    Rectangle
-    {
+    Rectangle {
         anchors.fill: parent
         color: Qt.rgba(0, 0, 0, 0.6)
     }
 
-    function showMessage(message, delay)
-    {
+    function showMessage(message, delay) {
         messageboxText.text = message
         messageboxVisibility.interval = (delay>0) ? delay : 3000
         messageboxVisibility.restart()
@@ -32,6 +29,7 @@ BackgroundItem
 
     TextArea {
         id: messageboxText
+        width: parent.width
         color: Theme.primaryColor
         text: ""
         readOnly: true
@@ -39,8 +37,7 @@ BackgroundItem
         anchors.centerIn: parent
     }
 
-    Timer
-    {
+    Timer {
         id: messageboxVisibility
         interval: 3000
     }

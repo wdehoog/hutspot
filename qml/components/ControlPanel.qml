@@ -1,17 +1,14 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-DockedPanel {
+Item {
 
-    property SilicaListView flickable: undefined
     property string defaultImageSource : "image://theme/icon-l-music"
 
     width: parent ? parent.width : 0
-    height: Theme.itemSizeLarge
-    dock: Dock.Bottom
-    open: false
-    modal: false
-    opacity: 1.0
+    height: parent ? parent.height : implicitHeight
+
+    implicitHeight: Theme.itemSizeLarge
 
     Column {
         width: parent.width
@@ -95,35 +92,6 @@ DockedPanel {
                 }
             }
 
-        }
-    }
-
-    Connections {
-        target: flickable
-        onContentXChanged: {
-            open = false
-            noScrollDetect.restart()
-        }
-        onContentYChanged: {
-            open = false
-            noScrollDetect.restart()
-        }
-    }
-
-
-    Timer {
-        id: noScrollDetect
-        interval: 300
-        repeat: false
-
-        onTriggered: {
-            open = true
-        }
-     }
-
-    onOpenChanged: {
-        if(!open) {
-            modal = false
         }
     }
 

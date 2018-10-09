@@ -322,8 +322,18 @@ ApplicationWindow {
     onHasValidTokenChanged: {
         if(start_stop_librespot.value) {
             if(librespot.serviceEnabled) {
-                if(hasValidToken)
+                if(hasValidToken) {
+                    // if running and already in the list then we do not have to start it
+                    // but unfortunately we do not know it's name or id
+                    /*if(librespot.serviceRunning) {
+                        var devices = app.controller.devices
+                        for(var i=0;i<devices.lenght;i++) {
+                            if(devices.get(i).name === "")
+                                return
+                        }
+                    }*/
                     librespot.start()
+                }
                 // ToDo: stop Librespot if the token becomes invalid?
             }
         }

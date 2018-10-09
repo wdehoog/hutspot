@@ -32,8 +32,8 @@ Page {
 
         width: parent.width
         anchors.top: parent.top
-        anchors.bottom: navPanel.top
-        clip: navPanel.expanded
+        anchors.bottom: panelLoader.itemTop
+        clip: panelLoader.itemExpanded
 
         header: Column {
             id: lvColumn
@@ -82,8 +82,9 @@ Page {
 
     }
 
-    NavigationPanel {
-        id: navPanel
+    PanelLoader {
+        id: panelLoader
+        flickable: listView
     }
 
     function refresh() {
@@ -111,11 +112,12 @@ Page {
             showBusy = false
         })
 
+        /* why is this here?
         for(var i=0;i<app.history.length;i++) {
             var parsed = Util.parseSpotifyUri(app.history[i])
             if(parsed.type !== undefined)
                 console.log("history: type=" + parsed.type +", id=" + parsed.id)
-        }
+        }*/
     }
 
     property alias cursorHelper: cursorHelper

@@ -109,10 +109,6 @@ Page {
         VerticalScrollDecorator {}
     }
 
-    NavigationPanel {
-        id: navPanel
-    }
-
     // signal foundDevicesChanged()
     // onFoundDevicesChanged: refreshDevices()
 

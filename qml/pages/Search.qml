@@ -42,8 +42,8 @@ Page {
 
         width: parent.width
         anchors.top: parent.top
-        anchors.bottom: navPanel.top
-        clip: navPanel.expanded
+        anchors.bottom: panelLoader.itemTop
+        clip: panelLoader.itemExpanded
 
         header: Column {
             id: lvColumn
@@ -252,8 +252,9 @@ Page {
         }
     }
 
-    NavigationPanel {
-        id: navPanel
+    PanelLoader {
+        id: panelLoader
+        flickable: listView
     }
 
     property alias cursorHelper: cursorHelper
