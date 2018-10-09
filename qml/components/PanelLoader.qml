@@ -41,6 +41,11 @@ Item {
         }
     }
 
+    // copied from VerticalScrollDecorator
+    property bool _inBounds: flickable
+                             && (!flickable.pullDownMenu || !flickable.pullDownMenu.active)
+                             && (!flickable.pushUpMenu || !flickable.pushUpMenu.active)
+
     property bool _ignoreYChange: false
 
     Connections {
@@ -50,6 +55,8 @@ Item {
                 return
             open = false
             noScrollDetect.restart()
+            var lastPart = flickable.contentHeight - flickable.contentY + flickable.originY
+            console.log("overshoot lastPart: " + lastPart + ", atYEnd: " + flickable.atYEnd + ", originY: " + flickable.originY + ", contentY: " + flickable.contentY + ", contentHeight: " + flickable.contentHeight)
         }
     }
 
@@ -58,7 +65,10 @@ Item {
         interval: 300
         repeat: false
         onTriggered: {
-            open = true
+            if(_inBounds)
+                open = true
+            else
+                restart()
         }
     }
 
@@ -68,7 +78,6 @@ Item {
             when: open
             PropertyChanges { target: panel; height: itemHeight }
             //PropertyChanges { target: flickable; height: flickable.parent.height - itemHeight }
-            //PropertyChanges { target: flickable; contentY: contentY + itemHeight }
         },
         State {
             name: "hidden"
@@ -79,12 +88,18 @@ Item {
     ]
 
     onEndOpenDetectedChanged: {
-        if(endOpenDetected
-           && flickable
-           && flickable.contentY > 0) { // otherwise we can never show the top
-            _ignoreYChange = true
-            flickable.contentY += height
-            _ignoreYChange = false
+        // the last item can be hidden under the panel and becomes unreachable
+        // if it is the move the list up
+        if(endOpenDetected && flickable) {
+            if(flickable.contentY <= 0) // otherwise we can never show the top
+                return
+            var lastPart = flickable.contentHeight - flickable.contentY + flickable.originY
+            console.log("lastPart: " + lastPart + ", atYEnd: " + flickable.atYEnd + ", originY: " + flickable.originY + ", contentY: " + flickable.contentY + ", contentHeight: " + flickable.contentHeight)
+            if(lastPart <= flickable.parent.height) {
+                _ignoreYChange = true
+                flickable.contentY += height
+                _ignoreYChange = false
+            }
         }
     }
 
@@ -95,14 +110,14 @@ Item {
             from: "shown"; to: "hidden"
             SequentialAnimation {
                 NumberAnimation { property: "height"; duration: 500; easing.type: Easing.InOutQuad }
-                PropertyAction { target: panel; property: "endOpenDetected"; value: false}
+                PropertyAction { target: panel; property: "endOpenDetected"; value: false} // to detect end of animations
             }
         },
         Transition {
             from: "hidden"; to: "shown"
             SequentialAnimation {
                 NumberAnimation { property: "height"; duration: 500; easing.type: Easing.InOutQuad }
-                PropertyAction { target: panel; property: "endOpenDetected"; value: true}
+                PropertyAction { target: panel; property: "endOpenDetected"; value: true} // to detect end of animations
             }
         }
     ]
