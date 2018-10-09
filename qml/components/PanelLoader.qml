@@ -51,12 +51,14 @@ Item {
     Connections {
         target: flickable
         onContentYChanged: {
+            // programmatically scrolling
             if(_ignoreYChange)
+                return
+            // if last item is just above panel
+            if(!_inBounds || flickable.atYEnd)
                 return
             open = false
             noScrollDetect.restart()
-            var lastPart = flickable.contentHeight - flickable.contentY + flickable.originY
-            console.log("overshoot lastPart: " + lastPart + ", atYEnd: " + flickable.atYEnd + ", originY: " + flickable.originY + ", contentY: " + flickable.contentY + ", contentHeight: " + flickable.contentHeight)
         }
     }
 
